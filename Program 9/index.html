@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Employee List</h1>
+    <div ng-app="myApp">
+      <div ng-controller="EmployeeController">
+        <input type="text" ng-model="searchName" placeholder="Search by Name">
+        <input type="number" ng-model="searchSalary" placeholder="Search by Salary">
+        <button ng-click="searchEmployees()">Search</button>
+        <ul>
+          <li ng-repeat="employee in employees">{{employee.name}} - {{employee.salary}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var myApp = angular.module('myApp', []);
+    myApp.controller('EmployeeController', function($scope) {
+      $scope.employees = [
+        { name: 'Johm Doe', salary: 8000 },
+        { name: 'Sukshem', salary: 75000 },
+        { name: 'Tejas', salary: 60000 },
+        { name: 'Tilak', salary: 70000 }
+      ];
+      $scope.searchEmployees = function() {
+        $scope.employees = $scope.employees.filter(function(employee) {
+          return employee.name.toLowerCase().indexOf($scope.searchName.toLowerCase()) !== -1 && employee.salary >= $scope.searchSalary;
+        });
+      };
+    });
+  </script>
+</body>
+</html>

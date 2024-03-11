@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Item Collection Management</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="myApp">
+    <div class="container" ng-controller="ItemController">
+        <h2>Item Collection</h2>
+        <p>Total number of items: {{ items.length }}</p>
+        <ul>
+            <li ng-repeat="item in items">
+                <span>{{ item.name }}</span>
+                <button ng-click="removeItem(item)">Remove</button>
+            </li>
+        </ul>
+        <div class="add-item-container">
+            <label>New Item: </label>
+            <input type="text" ng-model="newItemName">
+            <button ng-click="addItem()">Add Item</button>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('ItemController', function($scope) {
+            $scope.items = [
+                { name: 'Apple' },
+                { name: 'Orange' },
+                { name: 'Milk' }
+            ];
+            $scope.newItemName = '';
+            $scope.addItem = function() {
+                if ($scope.newItemName) {
+                    $scope.items.push({ name: $scope.newItemName });
+                    $scope.newItemName = '';
+                }
+            };
+            $scope.removeItem = function(item) {
+                var index = $scope.items.indexOf(item);
+                if (index !== -1) {
+                    $scope.items.splice(index, 1);
+                }
+            };
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AngularJS Factorial & Square Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #7274d8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .result {
+            font-size: 24px;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #c4a5a5;
+            border-radius: 5px;
+            background-color: #5e3f3f;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator" ng-app="calculatorApp" ng-controller="CalculatorController">
+        <h1>Factorial & Square Calculator</h1>
+        <input type="number" ng-model="number" placeholder="Enter a number">
+        <br><br>
+        <button ng-click="calculateFactorial()">Calculate Factorial</button>
+        <button ng-click="calculateSquare()">Calculate Square</button>
+        <br><br>
+        <p class="result" ng-if="factorial !== null">Factorial: {{factorial}}</p>
+        <p class="result" ng-if="square !== null">Square: {{square}}</p>
+    </div>
+
+    <script>
+        var app = angular.module('calculatorApp', []);
+        app.controller('CalculatorController', function ($scope) {
+            $scope.number = 0;
+            $scope.factorial = null;
+            $scope.square = null;
+
+            $scope.calculateFactorial = function () {
+                let num = $scope.number;
+                if (num < 0) {
+                    $scope.factorial = "Undefined (Factorial of a negative number is not defined)";
+                    return;
+                }
+                let result = 1;
+                for (let i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                $scope.factorial = result;
+            };
+
+            $scope.calculateSquare = function () {
+                $scope.square = $scope.number * $scope.number;
+            };
+        });
+    </script>
+</body>
+</html>

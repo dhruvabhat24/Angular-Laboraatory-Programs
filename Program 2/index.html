@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AngularJS Shopping List App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #shopping-list-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style> 
+</head>
+<body>
+    <div id="shopping-list-container" ng-app="myApp" ng-controller="myCtrl">
+        <h1>Shopping List App</h1>
+        <table>
+            <tr>
+                <th>Items</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="item in items track by $index">
+                <td>{{item}}</td>
+                <td>
+                    <button ng-click="removeItem($index)">Remove</button>
+                </td>
+            </tr>
+        </table>
+        <input type="text" ng-model="newItem" placeholder="Enter New Item">
+        <button ng-click="addItem()">Add Item</button>
+    </div>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.items = ["Milk", "Bread", "Eggs"];
+            $scope.addItem = function() {
+                $scope.items.push($scope.newItem);
+                $scope.newItem = "";
+            };
+            $scope.removeItem = function(index) {
+                $scope.items.splice(index, 1);
+            };
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List Application</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    div {
+      text-align: center;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-left: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    input {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    div[ng-show="editingTask"] {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="myController">
+    <h2>To-Do List</h2>
+    <ul>
+      <li ng-repeat="task in tasks">
+        {{ task.name }}
+        <button ng-click="editTask(task)">Edit Task</button>
+        <button ng-click="deleteTask(task)">Delete Task</button>
+      </li>
+    </ul>
+    <div>
+      <label>New Task: </label>
+      <input type="text" ng-model="newTaskName">
+      <button ng-click="addTask()">Add Task</button>
+    </div>
+    <div ng-show="editingTask">
+      <label>Edit Task: </label>
+      <input type="text" ng-model="editedTaskName">
+      <button ng-click="saveTask()">Save</button>
+      <button ng-click="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myController', function ($scope) {
+      // Default tasks
+      $scope.tasks = [
+        { name: 'Attend Class'},
+        { name: 'Complete Assignment'},
+        { name: 'Study for CIE'}
+      ];
+      $scope.newTaskName = '';
+      $scope.editingTask = null;
+      $scope.editedTaskName = '';
+      
+      $scope.addTask = function () {
+        if ($scope.newTaskName) {
+          $scope.tasks.push({ name: $scope.newTaskName });
+          $scope.newTaskName = '';
+        }
+      };
+      
+      $scope.editTask = function (task) {
+        $scope.editingTask = task;
+        $scope.editedTaskName = task.name;
+      };
+      
+      $scope.saveTask = function () {
+        if ($scope.editingTask) {
+          $scope.editingTask.name = $scope.editedTaskName;
+          $scope.cancelEdit();
+        }
+      };
+      
+      $scope.cancelEdit = function () {
+        $scope.editingTask = null;
+        $scope.editedTaskName = '';
+      };
+      
+      $scope.deleteTask = function (task) {
+        var index = $scope.tasks.indexOf(task);
+        if (index !== -1) {
+          $scope.tasks.splice(index, 1);
+        }
+      };
+    });
+  </script>
+</body>
+</html>

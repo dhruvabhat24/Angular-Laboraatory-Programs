@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student detail</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+    </script>
+    <style>
+        table,tr,td{
+            background-color: darkkhaki;
+        }
+        *{
+            background-color: antiquewhite;
+        }
+        table,td{
+            border: 2px solid;
+        }
+        th{
+            background-color: blueviolet;
+        }
+        
+        input{
+            background-color: darkgray;
+        }
+    </style>
+</head>
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <h1><u>Student detail</u></h1>
+        <table>
+            <th>USN</th><th>Name</th><th>CGPA</th>
+            <tr ng-repeat="student in students">
+            <td>{{student.usn}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.cgpa}}</td>
+        </tr>
+        </table>
+        <p>Total number of students:{{students.length}}</p>
+        <input type="text" ng-model="usn" placeholder="Enter the USN" > 
+        <input type="text" ng-model="name" placeholder="Enter the NAME" > 
+        <input type="text" ng-model="cgpa" placeholder="Enter the CGPA" > 
+        <button ng-click="additem()">Add Student</button>
+        <button ng-click="removestudent()">Remove Student</button>
+    </div>
+    <script>
+        var app=angular.module("myApp", []);
+        app.controller("myCtrl",function($scope)
+        {
+            $scope.students=[
+                {usn:'4CB21IS021',name:"Ankith",cgpa:'8.9'},
+                {usn:'4CB21IS022',name:"Tejas",cgpa:'7.1'},
+                {usn:'4CB21IS023',name:"Kartik",cgpa:'8.2'},
+                {usn:'4CB21IS024',name:"Umesha",cgpa:'8.5'},
+                {usn:'4CB21IS025',name:"Mythili",cgpa:'9.1'}
+        ]
+        $scope.additem=function(){
+                $scope.students.push({
+                    usn: $scope.usn, 
+                    name: $scope.name, 
+                    cgpa: $scope.cgpa, 
+                })
+                $scope.usn="";
+                $scope.name="";
+                $scope.cgpa="";
+
+                
+            };
+            $scope.removestudent=function(index){
+                $scope.students.splice(index,1);
+            };
+        })
+    </script>
+    
+</body>
+</html>
